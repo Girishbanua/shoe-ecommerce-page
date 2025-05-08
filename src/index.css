@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+    font-family: 'Kumbh Sans', sans-serif;
+    font-size: 16px;
+}
+img{
+    @apply w-max cursor-pointer transition-all ease-in-out duration-100 
+}
+ul{
+    @apply list-none p-2
+}
+nav ul li{
+    @apply p-1 cursor-pointer hover:text-Very-dark-blue border-b-Orange hover:border-b-4 smooth-transition
+}
+
+.smooth-transition{
+    @apply transition-all ease-in-out duration-200
+}
+.orange-button{
+    @apply bg-Orange text-White font-bold p-4 rounded-lg w-full flex items-center justify-center gap-4 hover:bg-Orange/70 smooth-transition 
+}
+
