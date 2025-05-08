@@ -28,7 +28,7 @@ function Header({visible, setVisible, count}) {
 
         <div>
           <div className="flex justify-center items-center gap-8 relative">
-            <div className="cartCount bg-Orange text-White rounded-2xl text-[9px] px-2 font-bold absolute top-1 left-3">{count}</div>
+            {count > 0 && <div className="cartCount bg-Orange text-White rounded-2xl text-[9px] px-2 font-bold absolute top-1 left-3">{count}</div>}
             <button
               onClick={() => setVisible(!visible)}
               className="w-full h-max p-2 scale-150 cursor-pointer hover:scale-[1.75] smooth-transition"
