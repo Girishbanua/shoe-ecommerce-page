@@ -4,7 +4,7 @@ import logo from "./images/logo.svg";
 import { BsCart3 } from "react-icons/bs";
 import avatar from "./images/image-avatar.png";
 
-function Header({visible, setVisible, count}) {
+function Header({visible, setVisible, count, setCount}) {
   
   return (
     <div className="relative">
@@ -43,12 +43,12 @@ function Header({visible, setVisible, count}) {
           </div>
         </div>
       </header>
-      {visible && <CartComp count={count}/>}
+      {visible && <CartComp count={count} setCount={setCount} />}
     </div>
   );
 }
 
-function CartComp({count}) {
+function CartComp({count, setCount}) {
   
   return (
     <div className="cart absolute bg-White h-[35vh] w-[25vw] top-[12vh] right-0 shadow-xl rounded-lg flex flex-col ">
@@ -57,14 +57,14 @@ function CartComp({count}) {
       </div>
       <div className="down flex items-center justify-center h-full p-2 ">
         {
-          count > 0 ? <ProductComp count={count} /> : <p className="text-Grayish-blue font-semibold ">Your cart is empty.</p>
+          count > 0 ? <ProductComp count={count} setCount={setCount} /> : <p className="text-Grayish-blue font-semibold ">Your cart is empty.</p>
         }
       </div>
     </div>
   );
 }
 
-function ProductComp({count}) {
+function ProductComp({count, setCount}) {
   return (
     <div className="product ">
       <div className="flex gap-6 justify-between items-center">
@@ -73,7 +73,9 @@ function ProductComp({count}) {
           <p className="text-Dark-grayish-blue" >Fall Limited Edition Sneakers</p>
           <p className="text-Dark-grayish-blue" >$125.00 <span> x {count}</span> <b className="text-Very-dark-blue">${count * 125}.00</b></p> 
         </div>
-        <button>D</button>
+        <button onClick={() => setCount(0)}>
+          <img src="/images/delete.png" alt="delete" className="h-7 " />
+        </button>
       </div>
       <button className="orange-button mt-5">Checkout</button>
     </div>
@@ -92,7 +94,7 @@ export default function App() {
 
   return (
     <>
-      <Header visible={visible} setVisible={setVisible} count={count} />
+      <Header visible={visible} setVisible={setVisible} count={count} setCount={setCount}/>
       <section className="p-10 mt-4 flex justify-evenly w-full gap-8">
         <div className="heroLeft w-max flex flex-col gap-5 p-4">
           <div className="w-max">
