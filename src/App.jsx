@@ -112,11 +112,11 @@ function Header({ visible, setVisible, count, setCount }) {
 
 function CartComp({ count, setCount }) {
   return (
-    <div className="cart absolute h-[35vh] w-[25vw] top-[12vh] right-0 shadow-2xl rounded-lg flex flex-col bg-White border-Grayish-blue/20 border-2 border-b-4 border-l-4 ">
-      <div className="up border-b-Grayish-blue border-b">
+    <div className="cart absolute sm:h-[35vh] w-[96vw] sm:w-[25vw] top-[10vh] sm:top-[12vh] right-2 sm:right-0 shadow-2xl rounded-lg flex flex-col bg-White border-Grayish-blue/20 border-2 border-b-4 border-l-4 ">
+      <div className="up border-b-Grayish-blue border-b p-2 ">
         <h2 className="p-3 font-semibold text-Very-dark-blue ">Cart</h2>
       </div>
-      <div className="down flex items-center justify-center h-full p-2 ">
+      <div className="down flex items-center justify-center h-full py-6 sm:p-2 ">
         {count > 0 ? (
           <ProductComp count={count} setCount={setCount} />
         ) : (
@@ -139,7 +139,7 @@ function ProductComp({ count, setCount }) {
           className="h-16 rounded-lg"
         />
         <div>
-          <p className="text-Dark-grayish-blue">
+          <p className="text-Dark-grayish-blue sm:text-normal text-[0.9rem]">
             Fall Limited Edition Sneakers
           </p>
           <p className="text-Dark-grayish-blue">
@@ -148,7 +148,7 @@ function ProductComp({ count, setCount }) {
           </p>
         </div>
         <button onClick={() => setCount(0)}>
-          <img src="images/delete.png" alt="delete" className="h-7 " />
+          <img src="icons/icon-delete.svg" alt="delete" className="h-7 " />
         </button>
       </div>
       <button className="orange-button mt-5">Checkout</button>
