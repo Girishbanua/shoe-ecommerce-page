@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { data } from "./data";
 
+// Navbar component is basically the list of things to navigate like the different sections (menubar, RiWomenFill, etc)
 function NavbarComp() {
   const [click, setClick] = useState(false);
   const [change, setChange] = useState(true);
@@ -32,7 +33,7 @@ function NavbarComp() {
         )}
       </div>
       {click && (
-        <div className="sm:hidden absolute -right-5 top-0 p-9 w-[75%] h-screen rounded-l-3xl backdrop-blur-xl z-20 border-l-Grayish-blue/20 border-l-4  ">
+        <div className="sm:hidden fixed -right-5 top-0 p-9 w-[75%] h-screen rounded-l-3xl backdrop-blur-xl z-20 border-l-Grayish-blue/20 border-l-4  ">
           <ul className="flex flex-col gap-10 my-16 text-xl ">
             <NavListComp />
           </ul>
@@ -54,7 +55,9 @@ const NavListComp = () => {
   );
 };
 
-function Header({ visible, setVisible, count, setCount }) {
+//Header Contains Navbar Component insisde it and is the main navbar
+function Header({ visible, setVisible, count, setCount, profile, setProfile }) {
+
   return (
     <div className="relative">
       <header className="flex gap-3 border-b border-Grayish-blue sm:p-2 p-6 items-center justify-between max-w-6xl mx-auto sm:h-28 h-16 relative ">
@@ -101,14 +104,33 @@ function Header({ visible, setVisible, count, setCount }) {
               src="images/new.png"
               alt="avatar_image"
               className="w-9 brightness-125 sm:w-10 hover:border-[3px] border-Orange/80 rounded-full scale-75 sm:scale-100"
+              onClick={() => setProfile(!profile)}
             />
           </div>
         </div>
+        {profile && <ProfileModal setProfile={setProfile} />}
       </header>
       {/* cart component will be visible only when one or more product is added */}
       {visible && <CartComp count={count} setCount={setCount} />}
     </div>
   );
+}
+const ProfileModal = ({setProfile}) => {
+  return (
+   <div className="modal bg-Black/50 h-[100vh] w-full  fixed z-20 top-0 left-0 flex items-center justify-center ">
+    
+     <div className="profile relative w-[80vw] sm:w-[50vw] h-[300px] sm:h-[50vh] bg-White/30
+    backdrop-blur-xl backdrop-brightness-125 
+    rounded-xl flex items-center justify-center flex-col
+    border-Grayish-blue/30 border-l-[6px] border-b-[6px] 
+    ">
+      <img src="images/new.png" alt="avatar_image" className="rounded-full shadow-2xl border-8 border-Black/30 " />
+      <h1 className="mt-2 text-xl font-semibold" >Girish Ch. Banua</h1>
+      <p>Learner / Web developer / Educator</p>
+      <img src="icons/icon-close.svg" alt="svg" onClick={() => setProfile(false)} className="z-30 sm:size-10 size-7 brightness-50 absolute -top-[12%] sm:-top-[18%] right-5 invert" />
+    </div>   
+   </div>
+  )
 }
 
 //Cart Component: 
@@ -167,6 +189,7 @@ export default function App() {
   const [count, setCount] = useState(0);
   const [enable, setEnable] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [profileVisible, setProfileVisible] = useState(false);
   const shoedata = data;
 
   const [changeI, setI] = useState(0);
@@ -193,6 +216,8 @@ export default function App() {
         setVisible={setVisible}
         count={count}
         setCount={setCount}
+        profile={profileVisible}
+        setProfile={setProfileVisible}
       />
       <section className="sm:p-10 sm:mt-4 mb-10 sm:mb-0 flex flex-col sm:flex-row justify-evenly w-full sm:gap-8 gap-3">
         <div className="heroLeft sm:w-max sm:flex flex-col gap-5 sm:p-4">
