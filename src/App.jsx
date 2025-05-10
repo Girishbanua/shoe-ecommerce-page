@@ -19,13 +19,13 @@ function NavbarComp() {
             src="icons/icon-menu.svg"
             alt="menu"
             onClick={handleNav}
-            className="h-5"
+            className="h-4 w-5"
           />
         ) : (
           <img
             src="icons/icon-close.svg"
             alt="close"
-            className="h-5"
+            className="h-4"
             onClick={handleNav}
             loading="lazy"
           />
@@ -57,13 +57,13 @@ const NavListComp = () => {
 function Header({ visible, setVisible, count, setCount }) {
   return (
     <div className="relative">
-      <header className="flex gap-3 border-b border-Grayish-blue sm:p-2 p-6 items-center justify-between max-w-6xl mx-auto sm:h-28 h-20 relative ">
-        <div className="flex gap-3 sm:gap-8 justify-start items-center">
+      <header className="flex gap-3 border-b border-Grayish-blue sm:p-2 p-6 items-center justify-between max-w-6xl mx-auto sm:h-28 h-16 relative ">
+        <div className="flex sm:gap-8 justify-start items-center">
           <NavbarComp />
           <img
             src="icons/logo.svg"
             alt="logo"
-            className="hover:scale-110 smooth-transition"
+            className="scale-75 sm:scale-100"
           />
 
           {/*Desktop View */}
@@ -88,7 +88,7 @@ function Header({ visible, setVisible, count, setCount }) {
               <svg
                 width="22"
                 height="20"
-                className="sm:scale-110"
+                className="sm:scale-110 scale-75"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
@@ -98,21 +98,23 @@ function Header({ visible, setVisible, count, setCount }) {
               </svg>
             </button>
             <img
-              src="images/image-avatar.png"
+              src="images/new.png"
               alt="avatar_image"
-              className="w-9 sm:w-10 hover:border-[3px] border-Orange/80 rounded-full"
+              className="w-9 brightness-125 sm:w-10 hover:border-[3px] border-Orange/80 rounded-full scale-75 sm:scale-100"
             />
           </div>
         </div>
       </header>
+      {/* cart component will be visible only when one or more product is added */}
       {visible && <CartComp count={count} setCount={setCount} />}
     </div>
   );
 }
 
+//Cart Component: 
 function CartComp({ count, setCount }) {
   return (
-    <div className="cart absolute sm:h-[35vh] w-[96vw] sm:w-[25vw] top-[10vh] sm:top-[12vh] right-2 sm:right-0 shadow-2xl rounded-lg flex flex-col bg-White border-Grayish-blue/20 border-2 border-b-4 border-l-4 ">
+    <div className="cart z-20 absolute sm:h-[35vh] w-[96vw] sm:w-[25vw] top-[10vh] sm:top-[12vh] right-2 sm:right-0 shadow-2xl rounded-lg flex flex-col bg-White border-Grayish-blue/20 border-2 border-b-4 border-l-4 ">
       <div className="up border-b-Grayish-blue border-b p-2 ">
         <h2 className="p-3 font-semibold text-Very-dark-blue ">Cart</h2>
       </div>
@@ -129,6 +131,8 @@ function CartComp({ count, setCount }) {
   );
 }
 
+//Product Component: Contains The product details to be shown 
+//inside the Cart when add to cart or the cart button is clicked
 function ProductComp({ count, setCount }) {
   return (
     <div className="product ">
@@ -147,6 +151,7 @@ function ProductComp({ count, setCount }) {
             <b className="text-Very-dark-blue">${count * 125}.00</b>
           </p>
         </div>
+        {/* delete button that clears all the entries in the cart */}
         <button onClick={() => setCount(0)}>
           <img src="icons/icon-delete.svg" alt="delete" className="h-7 " />
         </button>
@@ -156,15 +161,30 @@ function ProductComp({ count, setCount }) {
   );
 }
 
+// Main App
 export default function App() {
   const [products] = useState(data);
   const [count, setCount] = useState(0);
   const [enable, setEnable] = useState(true);
   const [visible, setVisible] = useState(false);
+  const shoedata = data;
+
+  const [changeI, setI] = useState(0);
+  let shoeId = shoedata[changeI].id;
 
   useEffect(() => {
     count > 0 ? setEnable(false) : setEnable(true);
-  }, [count]);
+  }, [count]); 
+
+  //functionality of Left and right buttons on the mobile devices for changing the images
+  function ImgChangeRight() {
+    changeI > 2 ? setI(0) : setI(changeI + 1);    
+    // console.log("clicked right", changeI);
+  }
+  function ImgChangeLeft() {
+    changeI < 1 ? setI(3) : setI(changeI - 1);    
+    // console.log("clicked left", changeI);
+  }
 
   return (
     <>
@@ -174,13 +194,29 @@ export default function App() {
         count={count}
         setCount={setCount}
       />
-      <section className="sm:p-10 sm:mt-4 flex flex-col sm:flex-row justify-evenly w-full sm:gap-8 gap-6">
+      <section className="sm:p-10 sm:mt-4 mb-10 sm:mb-0 flex flex-col sm:flex-row justify-evenly w-full sm:gap-8 gap-3">
         <div className="heroLeft sm:w-max sm:flex flex-col gap-5 sm:p-4">
-          <div className="sm:w-max h-[18rem] w-full sm:h-auto">
+          <div className="sm:w-max h-[18rem] w-full sm:h-auto relative">
+            <div className="sm:hidden slidebuttons absolute flex justify-between w-full p-4 top-28 ">
+              <button onClick={ImgChangeLeft}>
+                <img
+                  src="icons/icon-previous.svg"
+                  alt="previous"
+                  className=" bg-White/90 w-10 h-10 p-[0.85rem] rounded-full "
+                />
+              </button>
+              <button onClick={ImgChangeRight}>
+                <img
+                  src="icons/icon-next.svg"
+                  alt="next"
+                  className=" bg-White/90 w-10 h-10 p-[0.85rem] rounded-full "
+                />
+              </button>
+            </div>
             <img
-              src="images/image-product-1.jpg"
+              src={`images/image-product-${shoeId}.jpg`}
               alt="hero-image"
-              className="sm:rounded-2xl sm:h-[24rem] object-cover h-full w-full "
+              className="sm:rounded-2xl sm:h-[24rem] object-[25%_10%] object-cover h-full w-full "
             />
           </div>
           <div className="hidden sm:flex justify-between">
@@ -196,14 +232,14 @@ export default function App() {
           </div>
         </div>
 
-        <div className="heroRight sm:w-[50%] sm:p-8 px-6 self-center">
-          <h2 className="text-sm uppercase sm:mb-4 mb-2 font-semibold tracking-widest text-Orange ">
+        <div className="heroRight sm:w-[50%] sm:p-8 px-6 py-2 sm:self-center">
+          <h2 className="text-xs uppercase sm:mb-4 mb-2 font-semibold tracking-widest text-Orange ">
             sneaker company
           </h2>
-          <h1 className="text-3xl sm:text-5xl mb-4 sm:mb-8 font-bold text-Very-dark-blue ">
+          <h1 className="text-[1.6rem] w-[300px] sm:w-auto sm:text-5xl mb-4 sm:mb-8 font-bold text-Very-dark-blue leading-tight ">
             Fall Limited Edition Sneakers
           </h1>
-          <p className="text-Dark-grayish-blue mb-4 leading-relaxed text-[0.95rem] sm:text-lg ">
+          <p className="text-Dark-grayish-blue mb-4 leading-relaxed text-[0.85rem] sm:text-lg w-[300px] sm:w-auto  ">
             These low-profile sneakers are your perfect casual wear companion.
             Featuring a durable rubber outer sole, they’ll withstand everything
             the weather can offer.
