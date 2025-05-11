@@ -33,7 +33,7 @@ function NavbarComp() {
         )}
       </div>
       {click && (
-        <div className="sm:hidden fixed -right-5 top-0 p-9 w-[75%] h-screen rounded-l-3xl backdrop-blur-xl z-20 border-l-Grayish-blue/20 border-l-4  ">
+        <div className="sm:hidden fixed -right-5 top-0 p-9 w-[75%] h-screen rounded-l-3xl backdrop-blur-xl z-30 border-l-Grayish-blue/20 border-l-4  ">
           <ul className="flex flex-col gap-10 my-16 text-xl ">
             <NavListComp />
           </ul>
@@ -57,7 +57,6 @@ const NavListComp = () => {
 
 //Header Contains Navbar Component insisde it and is the main navbar
 function Header({ visible, setVisible, count, setCount, profile, setProfile }) {
-
   return (
     <div className="relative">
       <header className="flex gap-3 border-b border-Grayish-blue sm:p-2 p-6 items-center justify-between max-w-6xl mx-auto sm:h-28 h-16 relative ">
@@ -115,25 +114,36 @@ function Header({ visible, setVisible, count, setCount, profile, setProfile }) {
     </div>
   );
 }
-const ProfileModal = ({setProfile}) => {
+//displays my image and profile as a modal
+const ProfileModal = ({ setProfile }) => {
   return (
-   <div className="modal bg-Black/50 h-[100vh] w-full  fixed z-20 top-0 left-0 flex items-center justify-center ">
-    
-     <div className="profile relative w-[80vw] sm:w-[50vw] h-[300px] sm:h-[50vh] bg-White/30
+    <div className="modal bg-Black/50 backdrop-blur-sm h-[100vh] w-full  fixed z-20 top-0 left-0 flex items-center justify-center ">
+      <div
+        className="profile relative w-[80vw] sm:w-[50vw] h-[300px] sm:h-[50vh] bg-White/50
     backdrop-blur-xl backdrop-brightness-125 
     rounded-xl flex items-center justify-center flex-col
     border-Grayish-blue/30 border-l-[6px] border-b-[6px] 
-    ">
-      <img src="images/new.png" alt="avatar_image" className="rounded-full shadow-2xl border-8 border-Black/30 " />
-      <h1 className="mt-2 text-xl font-semibold" >Girish Ch. Banua</h1>
-      <p>Learner / Web developer / Educator</p>
-      <img src="icons/icon-close.svg" alt="svg" onClick={() => setProfile(false)} className="z-30 sm:size-10 size-7 brightness-50 absolute -top-[12%] sm:-top-[18%] right-5 invert" />
-    </div>   
-   </div>
-  )
-}
+    "
+      >
+        <img
+          src="images/new.png"
+          alt="avatar_image"
+          className="rounded-full shadow-2xl border-8 border-Black/30 "
+        />
+        <h1 className="mt-2 text-xl font-semibold">Girish Ch. Banua</h1>
+        <p>Learner / Web developer / Educator</p>
+        <img
+          src="icons/icon-close.svg"
+          alt="svg"
+          onClick={() => setProfile(false)}
+          className="z-30 sm:size-10 size-7 brightness-50 absolute -top-[12%] sm:-top-[18%] right-5 invert"
+        />
+      </div>
+    </div>
+  );
+};
 
-//Cart Component: 
+//Cart Component: displays the cart on top with contents or message
 function CartComp({ count, setCount }) {
   return (
     <div className="cart z-20 absolute sm:h-[35vh] w-[96vw] sm:w-[25vw] top-[10vh] sm:top-[12vh] right-2 sm:right-0 shadow-2xl rounded-lg flex flex-col bg-White border-Grayish-blue/20 border-2 border-b-4 border-l-4 ">
@@ -153,7 +163,7 @@ function CartComp({ count, setCount }) {
   );
 }
 
-//Product Component: Contains The product details to be shown 
+//Product Component: Contains The product details to be shown
 //inside the Cart when add to cart or the cart button is clicked
 function ProductComp({ count, setCount }) {
   return (
@@ -183,6 +193,71 @@ function ProductComp({ count, setCount }) {
   );
 }
 
+const ShoeModal = ({shoeId, products, ImgChangeRight, ImgChangeLeft, setI, setshoeModalVis }) => {
+  return (
+    <div className="Shoemodal hidden sm:flex items-center justify-center fixed z-30 bg-Black/50 backdrop-blur-sm w-full h-full left-0 ">      
+      <div className="modalContent relative">
+      <img
+          src="icons/icon-close.svg"
+          alt="svg"
+          onClick={() => setshoeModalVis(false)}
+          className="z-40 sm:size-10 size-7 brightness-50 absolute right-5 -top-8 invert"
+        />
+        <HeroLeft         
+          shoeId={shoeId}
+          products={products}
+          ImgChangeLeft={ImgChangeLeft}
+          ImgChangeRight={ImgChangeRight}
+          setI={setI}
+        />
+      </div>
+    </div>
+  );
+};
+
+const HeroLeft = ({ImgChangeLeft, ImgChangeRight,shoeId, products, setI }) => {
+  return (
+    <div className="heroLeft sm:w-max sm:flex flex-col gap-5 sm:p-4">
+      <div className="sm:w-max h-[18rem] w-full sm:h-auto relative">        
+        
+      <div className="slidebuttons absolute flex justify-between w-[120%] p-4 top-[50%] -left-10 ">
+              <button onClick={ImgChangeLeft}>
+                <img
+                  src="icons/icon-previous.svg"
+                  alt="previous"
+                  className=" bg-White/90 w-10 h-10 p-[0.85rem] rounded-full "
+                />
+              </button>
+              <button onClick={ImgChangeRight}>
+                <img
+                  src="icons/icon-next.svg"
+                  alt="next"
+                  className=" bg-White/90 w-10 h-10 p-[0.85rem] rounded-full "
+                />
+              </button>
+            </div>
+        <img
+          src={`images/image-product-${shoeId}.jpg`}
+          alt="hero-image"
+          className="sm:rounded-2xl sm:h-[24rem] object-[25%_10%] object-cover h-full w-full "
+        />
+      </div>
+      <div className="hidden sm:flex justify-between">
+        {products.map((item, id) => (
+          <div key={item.id} className="rounded-2xl">
+            <img
+              src={item.thumbnail}
+              alt="shoe-thumbnail"
+              className="object-cover rounded-xl h-20 hover:border-[3px] border-Orange hover:opacity-70  "
+              onClick={() => setI(id)}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // Main App
 export default function App() {
   const [products] = useState(data);
@@ -191,26 +266,28 @@ export default function App() {
   const [visible, setVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
   const shoedata = data;
+  const [shoeModalVis, setshoeModalVis] = useState(false);
 
   const [changeI, setI] = useState(0);
   let shoeId = shoedata[changeI].id;
 
   useEffect(() => {
     count > 0 ? setEnable(false) : setEnable(true);
-  }, [count]); 
+  }, [count]);
 
   //functionality of Left and right buttons on the mobile devices for changing the images
   function ImgChangeRight() {
-    changeI > 2 ? setI(0) : setI(changeI + 1);    
+    changeI > 2 ? setI(0) : setI(changeI + 1);
     // console.log("clicked right", changeI);
   }
   function ImgChangeLeft() {
-    changeI < 1 ? setI(3) : setI(changeI - 1);    
+    changeI < 1 ? setI(3) : setI(changeI - 1);
     // console.log("clicked left", changeI);
   }
 
   return (
     <>
+    {shoeModalVis && <ShoeModal shoeId={shoeId} products={products} ImgChangeRight={ImgChangeRight} ImgChangeLeft={ImgChangeLeft} setI={setI} setshoeModalVis={setshoeModalVis} />}
       <Header
         visible={visible}
         setVisible={setVisible}
@@ -219,9 +296,12 @@ export default function App() {
         profile={profileVisible}
         setProfile={setProfileVisible}
       />
+      
       <section className="sm:p-10 sm:mt-4 mb-10 sm:mb-0 flex flex-col sm:flex-row justify-evenly w-full sm:gap-8 gap-3">
         <div className="heroLeft sm:w-max sm:flex flex-col gap-5 sm:p-4">
           <div className="sm:w-max h-[18rem] w-full sm:h-auto relative">
+            {/* Image Slide Buttons which are visible only in mobile version */}
+
             <div className="sm:hidden slidebuttons absolute flex justify-between w-full p-4 top-28 ">
               <button onClick={ImgChangeLeft}>
                 <img
@@ -242,15 +322,17 @@ export default function App() {
               src={`images/image-product-${shoeId}.jpg`}
               alt="hero-image"
               className="sm:rounded-2xl sm:h-[24rem] object-[25%_10%] object-cover h-full w-full "
+              onClick={() => setshoeModalVis(true)}
             />
           </div>
           <div className="hidden sm:flex justify-between">
-            {products.map((item) => (
+            {products.map((item,id) => ( //item is for iterating all the images and id is for iterating through the ids
               <div key={item.id} className="rounded-2xl">
                 <img
                   src={item.thumbnail}
                   alt="shoe-thumbnail"
                   className="object-cover rounded-xl h-20 hover:opacity-50 "
+                  onClick={() => setI(id)}
                 />
               </div>
             ))}
