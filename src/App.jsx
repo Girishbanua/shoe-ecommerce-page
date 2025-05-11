@@ -117,7 +117,7 @@ function Header({ visible, setVisible, count, setCount, profile, setProfile }) {
 //displays my image and profile as a modal
 const ProfileModal = ({ setProfile }) => {
   return (
-    <div className="modal bg-Black/50 backdrop-blur-sm h-[100vh] w-full  fixed z-20 top-0 left-0 flex items-center justify-center ">
+    <div className="modal bg-Black/50 backdrop-blur-sm h-[100vh] w-full  fixed z-50 top-0 left-0 flex items-center justify-center ">
       <div
         className="profile relative w-[80vw] sm:w-[50vw] h-[300px] sm:h-[50vh] bg-White/50
     backdrop-blur-xl backdrop-brightness-125 
